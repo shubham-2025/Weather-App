@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import { useWeather } from "../hooks/useWeather";
+import WeatherCard from "../components/WeatherCard";
+import ForecastCard from "../components/ForecastCard";
 
 function Citypage() {
   const { city } = useParams();
@@ -22,17 +24,10 @@ function Citypage() {
 
   return (
     <main className="">
-      {weather ? (
-        <div>
-          <h1>{weather.name}</h1>
-          <p>{weather.weather[0].description}</p>
-          <p>{weather.main.feels_like}</p>
-          <p>{weather.main.temp}</p>
-          <p>{weather.main.humidity}</p>
-        </div>
-      ) : (
-        <p>Loading...</p>
-      )}
+      <div className="space-y-4">
+        {weather ? <WeatherCard weather={weather} /> : <p>Loading...</p>}
+        {forecast ? <ForecastCard forecast={forecast} /> : <p>Loading...</p>}
+      </div>
     </main>
   );
 }

@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import useGeolocation from "../hooks/useGeolocation";
 import { useWeather } from "../hooks/useWeather";
-import Searchbar from "../components/Searchbar";
 import { getSearches } from "../utils/local";
+import { FiSunrise, FiSunset } from "react-icons/fi";
+import WeatherCard from "../components/WeatherCard";
+import ForecastCard from "../components/ForecastCard";
 
 function Homepage() {
   const { location, address } = useGeolocation();
@@ -14,30 +16,12 @@ function Homepage() {
     }
   }, [address]);
 
-  useEffect(() => {
-    console.log("SEARCH: ",getSearches());
-  }, []);
-
-  useEffect(() => {
-    console.log(weather);
-  }, [weather]);
-  useEffect(() => {
-    console.log(forecast);
-  }, [forecast]);
   return (
     <main className="">
-      <Searchbar />
-      {weather ? (
-        <div>
-          <h1>{weather.name}</h1>
-          <p>{weather.weather[0].description}</p>
-          <p>{weather.main.feels_like}</p>
-          <p>{weather.main.temp}</p>
-          <p>{weather.main.humidity}</p>
-        </div>
-      ) : (
-        <p>Loading...</p>
-      )}
+      <div className="space-y-4 flex flex-col min-h-[91dvh]">
+        {weather ? <WeatherCard weather={weather} /> : <p>Loading...</p>}
+        {forecast ? <ForecastCard forecast={forecast} /> : <p>Loading...</p>}
+      </div>
     </main>
   );
 }

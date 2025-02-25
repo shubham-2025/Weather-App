@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+body {
+  background-image: url("/background.png");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100dvh;
+}
+
+main {
+  padding: 2rem;
+  padding-left: 19rem;
+}
+
+@media screen and (max-width: 768px) {
+  main {
+    padding-left: 2rem;
+  }
+}
+
+.sidebar {
+  background: #9393936c;
+  backdrop-filter: blur(10px);
+}
+
+.sidebar .s {
+  background-color: #ddf5ffb1;
+}
+
+.card {
+  background: #9393936c;
+  backdrop-filter: blur(10px);
+  @apply rounded-lg;
+}
+
+.f-card {
+  text-align: center;
+  border: 2px solid rgba(255, 255, 255, 0.423);
+  background-color: #759cff4d;
+  @apply rounded-lg;
+}
