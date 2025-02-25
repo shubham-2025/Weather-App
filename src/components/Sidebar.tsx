@@ -23,25 +23,31 @@ function Sidebar() {
           <Searchbar />
         </div>
         <div className="space-y-4">
-          {previousSearches.map((search) => (
-            <Link
-              to={`city/${search.term}`}
-              key={search.term}
-              className="s block relative w-full p-2 rounded-md shadow-md hover:shadow-lg hover:scale-110 transition-transform duration-300"
-            >
-              <p className="text-xl font-[600]">{search.term}</p>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  dispatch(removeSearchFromLocalStorage(search));
-                }}
-                className=" absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 hover:text-red-500 cursor-pointer"
+          {previousSearches.length > 0 ? (
+            previousSearches.map((search) => (
+              <Link
+                to={`city/${search.term}`}
+                key={search.term}
+                className="s block relative w-full p-2 rounded-md shadow-md hover:shadow-lg hover:scale-110 transition-transform duration-300"
               >
-                <FaCircleXmark className="" size={16} />
-              </button>
-            </Link>
-          ))}
+                <p className="text-xl font-[600]">{search.term}</p>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dispatch(removeSearchFromLocalStorage(search));
+                  }}
+                  className=" absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 hover:text-red-500 cursor-pointer"
+                >
+                  <FaCircleXmark className="" size={16} />
+                </button>
+              </Link>
+            ))
+          ) : (
+            <div className="h-full flex items-center justify-center">
+              <p className="text-center">No previous searches</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

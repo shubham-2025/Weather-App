@@ -82,22 +82,28 @@ function ForecastCard({ forecast }: { forecast: ForecastData }) {
     }));
 
   return (
-    <div className="card p-4 text-white flex-1">
+    <div className="card p-4 text-white flex-1 divide-y-2 divide-gray-300 space-y-2">
       <h2 className="text-2xl font-bold">Forecast</h2>
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={filteredData}>
-          <XAxis dataKey="time" />
-          <YAxis domain={["auto", "auto"]} unit="°C" />
-          <Tooltip content={<CustomTooltip active={false} payload={[]} />} />
-          <Line
-            type="monotone"
-            dataKey="temp"
-            stroke="#7b4dfa"
-            strokeWidth={2}
-          />
-          <Scatter data={filteredData} dataKey="temp" shape={<WeatherIcon />} />
-        </LineChart>
-      </ResponsiveContainer>
+      <div className="overflow-x-auto">
+        <ResponsiveContainer width="100%" height={300} minWidth={500}>
+          <LineChart data={filteredData}>
+            <XAxis dataKey="time" />
+            <YAxis domain={["auto", "auto"]} unit="°C" />
+            <Tooltip content={<CustomTooltip active={false} payload={[]} />} />
+            <Line
+              type="monotone"
+              dataKey="temp"
+              stroke="#7b4dfa"
+              strokeWidth={2}
+            />
+            <Scatter
+              data={filteredData}
+              dataKey="temp"
+              shape={<WeatherIcon />}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 }

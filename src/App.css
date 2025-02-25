@@ -41,4 +41,7 @@ main {
   @apply rounded-lg;
 }
 
-
+td {
+  padding-block: 0.2rem;
+  padding-inline: 0.5rem;
+}
