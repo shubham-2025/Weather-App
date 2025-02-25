@@ -97,3 +97,8 @@ interface ForecastData {
   ];
   message: number;
 }
+
+interface SearchType {
+  term: string;
+  time: number;
+}

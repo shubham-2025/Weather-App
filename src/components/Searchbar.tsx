@@ -1,15 +1,19 @@
 import React from "react";
 import { useNavigate } from "react-router";
+import { addSearchToLocalStorage } from "../features/search/searchThunk";
+import { useAppDispatch } from "../app/hook";
 
 function Searchbar() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  
   const [search, setSearch] = React.useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const timestamp = new Date().getTime();
     const newSearch = {
@@ -17,26 +21,10 @@ function Searchbar() {
       time: timestamp,
     };
 
-    //get the previous searches
-    const previousSearches = localStorage.getItem("searches");
-    let searches = previousSearches ? JSON.parse(previousSearches) : [];
-
-    //check if the search term already exists
-    const searchTermExists = searches.some(
-      (item: { term: string; time: number }) => item.term === search
-    );
-
-    if (!searchTermExists) {
-      //add the new search term to the array
-      searches = [...searches, newSearch];
-      //save the updated array to local storage
-      localStorage.setItem("searches", JSON.stringify(searches));
-    }
+    await dispatch(addSearchToLocalStorage(newSearch));
 
     navigate(`/city/${search}`);
   };
-
-
 
   return (
     <div>
