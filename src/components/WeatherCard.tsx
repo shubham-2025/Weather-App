@@ -36,7 +36,7 @@ function WeatherCard({ weather }: { weather: WeatherData }) {
         <p className="font-[700]">Wind Speed:</p>
         <p>{weather.wind.speed} m/s</p>
       </div>
-      <div className="text-white gap-2 grid grid-cols-2 place-items-center">
+      <div className="text-white gap-4 grid grid-cols-2 place-items-center">
         <div className="card p-4 w-full h-full flex items-center justify-center">
           <div className="text-center space-y-8">
             <div>

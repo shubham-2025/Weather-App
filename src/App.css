@@ -29,9 +29,9 @@ main {
 }
 
 .card {
-  background: #9393936c;
+  background: #ffffff6c;
   backdrop-filter: blur(10px);
-  @apply rounded-lg;
+  @apply rounded-xl;
 }
 
 .f-card {
@@ -40,3 +40,5 @@ main {
   background-color: #759cff4d;
   @apply rounded-lg;
 }
+
+

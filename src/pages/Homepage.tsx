@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import useGeolocation from "../hooks/useGeolocation";
 import { useWeather } from "../hooks/useWeather";
-import { getSearches } from "../utils/local";
-import { FiSunrise, FiSunset } from "react-icons/fi";
 import WeatherCard from "../components/WeatherCard";
 import ForecastCard from "../components/ForecastCard";
 
