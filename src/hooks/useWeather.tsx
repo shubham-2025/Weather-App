@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { getWeather } from "../utils/weather";
+import { useState } from "react";
+import { getForecast, getWeather } from "../utils/weather";
 
-
-export const useWeather = (city: string) => {
+export const useWeather = () => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [forecast, setForecast] = useState<ForecastData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,9 +25,24 @@ export const useWeather = (city: string) => {
     }
   };
 
-  useEffect(() => {
-    if (city) fetchWeather(city);
-  }, [city]);
+  const fetchForecast = async (city: string) => {
+    if (!city) return;
 
-  return { weather, loading, error, fetchWeather };
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await getForecast(city);
+      setForecast(data);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Failed to fetch forecast data"
+      );
+      setForecast(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  return { weather, loading, error, fetchWeather, forecast, fetchForecast };
 };

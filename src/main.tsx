@@ -3,11 +3,14 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { MessengerProvider } from "./hooks/useMessenger.tsx";
+import { BrowserRouter } from "react-router";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <MessengerProvider>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </MessengerProvider>
   </StrictMode>
 );
