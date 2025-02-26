@@ -29,7 +29,7 @@ main {
 }
 
 .card {
-  background: #ffffff6c;
+  background: radial-gradient(at top left, rgba(255, 255, 255, 0.71), rgba(255,255,255,0.4), transparent);
   backdrop-filter: blur(10px);
   @apply rounded-xl;
 }
@@ -42,7 +42,7 @@ main {
 
 .f-card {
   text-align: center;
-  border: 2px solid rgba(255, 255, 255, 0.423);
+  border: 2px solid #ffffff6c;
   background-color: #759cff4d;
   @apply rounded-lg;
 }

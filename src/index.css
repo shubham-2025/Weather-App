@@ -4,6 +4,7 @@
 
 body {
   font-family: "Roboto Mono", serif;
+  transition: background-image 0.5s ease-in-out;
 }
 
 ::-webkit-scrollbar {
