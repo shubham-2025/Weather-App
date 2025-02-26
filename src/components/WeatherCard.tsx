@@ -1,10 +1,17 @@
 import { FiSunrise, FiSunset } from "react-icons/fi";
 
-function WeatherCard({ weather }: { weather: WeatherData }) {
+function WeatherCard({
+  weather,
+  unit,
+}: {
+  weather: WeatherData;
+  unit: "metric" | "imperial";
+}) {
+  // const { unit } = useWeather();
   return (
     <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
       <div className="card p-4 ">
-        <h1 className="text-3xl font-[600] text-center">{weather.name}</h1>
+        
         <div className="flex max-md:flex-col text-center items-center justify-between gap-4">
           <div className="">
             <p className="flex flex-col items-center gap-2">
@@ -20,11 +27,12 @@ function WeatherCard({ weather }: { weather: WeatherData }) {
           </div>
           <div>
             <p className="text-4xl font-[700] ">
-              <span className="">{weather.main.temp}</span>
-              °C
+              <span className="">{weather.main.temp}</span>°
+              {unit === "metric" ? "C" : "F"}
             </p>
             <p className="text-sm text-[var(--text-2)]">
-              Feels like: {weather.main.feels_like}°C
+              Feels like: {weather.main.feels_like}°
+              {unit === "metric" ? "C" : "F"}
             </p>
           </div>
         </div>
@@ -38,19 +46,25 @@ function WeatherCard({ weather }: { weather: WeatherData }) {
                 <td>
                   <p className="font-[700]">H:</p>
                 </td>
-                <td className="text-[var(--text-2)]">{weather.main.temp_max}°C</td>
+                <td className="text-[var(--text-2)]">
+                  {weather.main.temp_max}°{unit === "metric" ? "C" : "F"}
+                </td>
               </tr>
               <tr className="divide-x-2 divide-white">
                 <td>
                   <p className="font-[700]">L:</p>
                 </td>
-                <td className="text-[var(--text-2)]">{weather.main.temp_min}°C</td>
+                <td className="text-[var(--text-2)]">
+                  {weather.main.temp_min}°{unit === "metric" ? "C" : "F"}
+                </td>
               </tr>
               <tr className="divide-x-2 divide-white">
                 <td>
                   <p className="font-[700]">Humidity:</p>
                 </td>
-                <td className="text-[var(--text-2)]">{weather.main.humidity}%</td>
+                <td className="text-[var(--text-2)]">
+                  {weather.main.humidity}%
+                </td>
               </tr>
               <tr className="divide-x-2 divide-white">
                 <td>
@@ -64,14 +78,19 @@ function WeatherCard({ weather }: { weather: WeatherData }) {
                 <td>
                   <p className="font-[700]">Pressure:</p>
                 </td>
-                <td className="text-[var(--text-2)]">{weather.main.pressure} hPa</td>
+                <td className="text-[var(--text-2)]">
+                  {weather.main.pressure} hPa
+                </td>
               </tr>
 
               <tr className="divide-x-2 divide-white">
                 <td>
                   <p className="font-[700]">Wind Speed:</p>
                 </td>
-                <td className="text-[var(--text-2)]">{weather.wind.speed} m/s</td>
+                <td className="text-[var(--text-2)]">
+                  {weather.wind.speed}{" "}
+                  {unit === "metric" ? "m/s" : "miles/hour"}
+                </td>
               </tr>
             </tbody>
           </table>

@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
-body {
+/* body {
   background-image: url("/background.png");
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
-  min-height: 100dvh;
-}
+  
+} */
 
 main {
   padding: 2rem;

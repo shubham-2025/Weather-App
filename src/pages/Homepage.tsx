@@ -4,17 +4,19 @@ import { useWeather } from "../hooks/useWeather";
 import WeatherCard from "../components/WeatherCard";
 import ForecastCard from "../components/ForecastCard";
 import { weatherBackgrounds } from "../utils/weather";
+import { FaLocationDot } from "react-icons/fa6";
 
 function Homepage() {
   const { address } = useGeolocation();
-  const { fetchWeather, weather, forecast, fetchForecast } = useWeather();
+  const { unit, setUnit, fetchWeather, weather, forecast, fetchForecast } =
+    useWeather();
 
   useEffect(() => {
     if (address) {
       fetchWeather("Nagpur");
       fetchForecast("Nagpur");
     }
-  }, [address]);
+  }, [address, unit]);
 
   useEffect(() => {
     if (weather) {
@@ -67,8 +69,42 @@ function Homepage() {
   return (
     <main className="">
       <div className="space-y-4 flex flex-col min-h-[91dvh]">
-        {weather ? <WeatherCard weather={weather} /> : <p>Loading...</p>}
-        {forecast ? <ForecastCard forecast={forecast} /> : <p>Loading...</p>}
+        {weather ? (
+          <>
+            <div className="flex items-center justify-between">
+              <h1 className="text-3xl font-[600] text-center">
+                <FaLocationDot className="inline -mt-1" />
+                {weather.name}
+              </h1>
+              <div className="flex border-2 border-white rounded-lg divide-x-2 divide-white overflow-hidden">
+                <button
+                  onClick={() => setUnit("metric")}
+                  className={`py-1 px-2 cursor-pointer ${
+                    unit === "metric" && "bg-white text-black font-[700]"
+                  }`}
+                >
+                  Metric
+                </button>
+                <button
+                  onClick={() => setUnit("imperial")}
+                  className={`py-1 px-2 cursor-pointer ${
+                    unit === "imperial" && "bg-white text-black font-[700]"
+                  }`}
+                >
+                  Imperial
+                </button>
+              </div>
+            </div>
+            <WeatherCard weather={weather} unit={unit} />
+          </>
+        ) : (
+          <p>Loading...</p>
+        )}
+        {forecast ? (
+          <ForecastCard forecast={forecast} unit={unit} />
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
     </main>
   );

@@ -8,7 +8,7 @@ import { weatherBackgrounds } from "../utils/weather";
 function Citypage() {
   const { city } = useParams();
 
-  const { fetchWeather, weather, forecast, fetchForecast } = useWeather();
+  const { unit, fetchWeather, weather, forecast, fetchForecast } = useWeather();
   useEffect(() => {
     if (city) {
       fetchWeather(city);
@@ -66,8 +66,16 @@ function Citypage() {
   return (
     <main className="">
       <div className="space-y-4">
-        {weather ? <WeatherCard weather={weather} /> : <p>Loading...</p>}
-        {forecast ? <ForecastCard forecast={forecast} /> : <p>Loading...</p>}
+        {weather ? (
+          <WeatherCard weather={weather} unit={unit} />
+        ) : (
+          <p>Loading...</p>
+        )}
+        {forecast ? (
+          <ForecastCard forecast={forecast} unit={unit} />
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
     </main>
   );

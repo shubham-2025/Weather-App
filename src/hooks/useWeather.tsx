@@ -6,6 +6,7 @@ export const useWeather = () => {
   const [forecast, setForecast] = useState<ForecastData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [unit, setUnit] = useState<"metric" | "imperial">("metric");
 
   const fetchWeather = async (city: string) => {
     if (!city) return;
@@ -13,7 +14,7 @@ export const useWeather = () => {
     try {
       setLoading(true);
       setError(null);
-      const data = await getWeather(city);
+      const data = await getWeather(city, unit);
       setWeather(data);
     } catch (err) {
       setError(
@@ -31,7 +32,7 @@ export const useWeather = () => {
     try {
       setLoading(true);
       setError(null);
-      const data = await getForecast(city);
+      const data = await getForecast(city, unit);
       setForecast(data);
     } catch (err) {
       setError(
@@ -43,6 +44,14 @@ export const useWeather = () => {
     }
   };
 
-
-  return { weather, loading, error, fetchWeather, forecast, fetchForecast };
+  return {
+    weather,
+    loading,
+    error,
+    fetchWeather,
+    forecast,
+    fetchForecast,
+    unit,
+    setUnit,
+  };
 };

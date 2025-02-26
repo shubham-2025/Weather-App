@@ -18,16 +18,16 @@ export const weatherBackgrounds = {
   default: "url('/clear-sky.webp')", // Default background
 };
 
-export async function getWeather(city: string) {
+export async function getWeather(city: string, system: "metric" | "imperial") {
   const response = await axios.get(
-    `${BASE_URL}?q=${city}&appid=${API_KEY}&units=metric`
+    `${BASE_URL}?q=${city}&appid=${API_KEY}&units=${system}`
   );
   return response.data;
 }
 
-export async function getForecast(city: string) {
+export async function getForecast(city: string, system: "metric" | "imperial") {
   const response = await axios.get(
-    `${FORECAST_URL}?q=${city}&appid=${API_KEY}&units=metric`
+    `${FORECAST_URL}?q=${city}&appid=${API_KEY}&units=${system}`
   );
   return response.data;
 }

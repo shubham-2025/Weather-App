@@ -3,19 +3,17 @@
 @import "tailwindcss";
 
 :root {
-  --gradient-1: radial-gradient(
-    at top left,
-    rgba(255, 255, 255, 0.71),
-    rgba(255, 255, 255, 0.4),
-    transparent
-  );
+  --gradient-1: #ffffff34;
   --text-1: #ffffff;
   --text-2: #374151;
+  --bg-color: #4096fe;
 }
 
 body {
-  font-family: "Roboto Mono", serif;
+  /* font-family: "Roboto Mono", serif; */
   transition: background-image 0.5s ease-in-out;
+  min-height: 100dvh;
+  background-color: var(--bg-color);
 }
 
 ::-webkit-scrollbar {

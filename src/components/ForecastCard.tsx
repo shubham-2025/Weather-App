@@ -10,9 +10,14 @@ import {
 interface CustomTooltipProps {
   active: boolean;
   payload: any[];
+  unit: "metric" | "imperial";
 }
 
-const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
+const CustomTooltip: React.FC<CustomTooltipProps> = ({
+  active,
+  payload,
+  unit,
+}) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
@@ -22,7 +27,10 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
           alt={data.description}
           className="mx-auto w-10 h-5 object-cover"
         />
-        <p className="text-black">{data.temp}°C</p>
+        <p className="text-black">
+          {data.temp}
+          {unit === "metric" ? "°C" : "°F"}
+        </p>
         <p className="text-sm text-[var(--text-1)]">{data.description}</p>
       </div>
     );
@@ -30,7 +38,13 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
   return null;
 };
 
-function ForecastCard({ forecast }: { forecast: ForecastData }) {
+function ForecastCard({
+  forecast,
+  unit,
+}: {
+  forecast: ForecastData;
+  unit: "metric" | "imperial";
+}) {
   const filteredData = forecast.list
     .filter((item) => {
       const forecastTime = new Date(item.dt_txt).getTime();
@@ -71,15 +85,19 @@ function ForecastCard({ forecast }: { forecast: ForecastData }) {
     <div className="card p-4 text-white flex-1 divide-y-2 divide-gray-300 space-y-2">
       <h2 className="text-2xl font-bold">Forecast</h2>
       <div className="overflow-x-auto">
-        <ResponsiveContainer width="100%" height={300} minWidth={500}>
+        <ResponsiveContainer width="100%" minHeight={400} minWidth={500}>
           <LineChart data={filteredData}>
             <XAxis dataKey="time" tick={{ fill: xAxisLabelColor }} />
             <YAxis
               domain={["auto", "auto"]}
-              unit="°C"
+              unit={unit === "metric" ? "°C" : "°F"}
               tick={{ fill: yAxisLabelColor }}
             />
-            <Tooltip content={<CustomTooltip active={false} payload={[]} />} />
+            <Tooltip
+              content={
+                <CustomTooltip active={false} payload={[]} unit={unit} />
+              }
+            />
             <Line
               type="monotone"
               dataKey="temp"
