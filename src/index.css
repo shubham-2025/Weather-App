@@ -2,6 +2,17 @@
 
 @import "tailwindcss";
 
+:root {
+  --gradient-1: radial-gradient(
+    at top left,
+    rgba(255, 255, 255, 0.71),
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  --text-1: #ffffff;
+  --text-2: #374151;
+}
+
 body {
   font-family: "Roboto Mono", serif;
   transition: background-image 0.5s ease-in-out;
@@ -19,4 +30,71 @@ body {
 
 ::-webkit-scrollbar-track {
   background-color: #2b2b2b3b;
+}
+
+.weather-sunny {
+  --gradient-1: radial-gradient(
+    at top left,
+    rgba(251, 178, 119, 0.71),
+    rgba(102, 80, 112, 0.4),
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  --text-1: #ffffff;
+  --text-2: #374151;
+}
+.weather-night {
+  --gradient-1: radial-gradient(
+    at top left,
+    rgba(64, 31, 86, 0.412),
+    rgba(162, 125, 244, 0.241),
+    rgba(70, 43, 43, 0.4),
+    transparent
+  );
+  --text-1: #ffffff;
+  --text-2: #97e0ef;
+}
+.weather-rainy {
+  --gradient-1: radial-gradient(
+    at top left,
+    rgba(66, 142, 255, 0.245),
+    rgba(125, 169, 244, 0.523),
+    rgba(92, 116, 150, 0.445),
+    transparent
+  );
+  --text-1: #ffffff;
+  --text-2: #091eff;
+}
+.weather-misty {
+  --gradient-1: radial-gradient(
+    at top left,
+    rgba(62, 82, 63, 0.245),
+    rgba(75, 56, 26, 0.379),
+    rgba(52, 64, 80, 0.445),
+    transparent
+  );
+  --text-1: #ffffff;
+  --text-2: #fe9538;
+}
+.weather-cloudy {
+  --gradient-1: radial-gradient(
+    at top left,
+    rgba(66, 142, 255, 0.245),
+    rgba(125, 169, 244, 0.523),
+    rgba(46, 68, 99, 0.551),
+    transparent
+  );
+  --text-1: #ffffff;
+  --text-2: #a6edf2;
+}
+.weather-snowy {
+  --gradient-1: radial-gradient(
+    at top left,
+    rgba(98, 102, 108, 0.245),
+    rgba(78, 91, 112, 0.523),
+    rgba(119, 119, 119, 0.551),
+    transparent
+  );
+  --text-1: #000000;
+  --text-2: #383434;
 }

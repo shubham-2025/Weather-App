@@ -11,6 +11,7 @@ body {
 main {
   padding: 2rem;
   padding-left: 19rem;
+  color: var(--text-1);
 }
 
 @media screen and (max-width: 768px) {
@@ -29,7 +30,7 @@ main {
 }
 
 .card {
-  background: radial-gradient(at top left, rgba(255, 255, 255, 0.71), rgba(255,255,255,0.4), transparent);
+  background: var(--gradient-1);
   backdrop-filter: blur(10px);
   @apply rounded-xl;
 }

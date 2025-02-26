@@ -23,7 +23,7 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
           className="mx-auto w-10 h-5 object-cover"
         />
         <p className="text-black">{data.temp}°C</p>
-        <p className="text-sm text-gray-500">{data.description}</p>
+        <p className="text-sm text-[var(--text-1)]">{data.description}</p>
       </div>
     );
   }
@@ -63,14 +63,22 @@ function ForecastCard({ forecast }: { forecast: ForecastData }) {
     );
   };
 
+  const rootStyles = getComputedStyle(document.documentElement);
+  const xAxisLabelColor = rootStyles.getPropertyValue("--text-1").trim();
+  const yAxisLabelColor = rootStyles.getPropertyValue("--text-1").trim();
+
   return (
     <div className="card p-4 text-white flex-1 divide-y-2 divide-gray-300 space-y-2">
       <h2 className="text-2xl font-bold">Forecast</h2>
       <div className="overflow-x-auto">
         <ResponsiveContainer width="100%" height={300} minWidth={500}>
           <LineChart data={filteredData}>
-            <XAxis dataKey="time" />
-            <YAxis domain={["auto", "auto"]} unit="°C" />
+            <XAxis dataKey="time" tick={{ fill: xAxisLabelColor }} />
+            <YAxis
+              domain={["auto", "auto"]}
+              unit="°C"
+              tick={{ fill: yAxisLabelColor }}
+            />
             <Tooltip content={<CustomTooltip active={false} payload={[]} />} />
             <Line
               type="monotone"
