@@ -3,7 +3,7 @@ import useGeolocation from "../hooks/useGeolocation";
 import { useWeather } from "../hooks/useWeather";
 import WeatherCard from "../components/WeatherCard";
 import ForecastCard from "../components/ForecastCard";
-import { weatherBackgrounds } from "../utils/weather";
+import { formatTimeWithTimezone, weatherBackgrounds } from "../utils/weather";
 import { FaLocationDot } from "react-icons/fa6";
 
 function Homepage() {
@@ -22,18 +22,34 @@ function Homepage() {
     if (weather) {
       const weatherCondition = weather.weather[0].description.toLowerCase();
       console.log(weatherCondition);
+      console.log(weather.dt);
 
-      const background =
-        weatherBackgrounds[
-          weatherCondition as keyof typeof weatherBackgrounds
-        ] || "url('/clear-sky.webp')";
-      // const background = "url('/snow.webp')";
+      const now = new Date(weather.dt * 1000);
+      const sunsetTime = new Date(weather.sys.sunset * 1000);
+
+      let background = "";
+      if (
+        weatherCondition.includes("clear sky") &&
+        now.getTime() > sunsetTime.getTime()
+      ) {
+        background = "url('/night-sky.webp')";
+      } else {
+        background =
+          weatherBackgrounds[
+            weatherCondition as keyof typeof weatherBackgrounds
+          ] || "url('/clear-sky.webp')";
+        // const background = "url('/snow.webp')";
+      }
 
       console.log(background);
 
-      document.body.style.backgroundImage = background;
-      document.body.style.backgroundSize = "cover";
-      document.body.style.backgroundPosition = "center";
+      const bg = document.getElementById("bg");
+
+      if (bg) {
+        bg.style.backgroundImage = background;
+        bg.style.backgroundSize = "cover";
+        bg.style.backgroundPosition = "center";
+      }
 
       document.body.classList.remove(
         "weather-sunny",
@@ -48,13 +64,16 @@ function Homepage() {
         weatherCondition.includes("clear") ||
         weatherCondition.includes("sun")
       ) {
-        document.body.classList.add("weather-sunny");
+        if (now.getTime() > sunsetTime.getTime()) {
+          document.body.classList.add("weather-night");
+        } else document.body.classList.add("weather-sunny");
       } else if (weatherCondition.includes("cloud")) {
         document.body.classList.add("weather-cloudy");
       } else if (weatherCondition.includes("rain")) {
         document.body.classList.add("weather-rainy");
       } else if (
         weatherCondition.includes("mist") ||
+        weatherCondition.includes("smoke") ||
         weatherCondition.includes("haze")
       ) {
         document.body.classList.add("weather-misty");
@@ -68,15 +87,22 @@ function Homepage() {
 
   return (
     <main className="">
+      <div id="bg" className="bg fixed inset-0 bg-black z-[-1]"></div>
       <div className="space-y-4 flex flex-col min-h-[91dvh]">
         {weather ? (
           <>
             <div className="flex items-center justify-between">
-              <h1 className="text-3xl font-[600] text-center">
-                <FaLocationDot className="inline -mt-1" />
-                {weather.name}
-              </h1>
-              <div className="flex border-2 border-white rounded-lg divide-x-2 divide-white overflow-hidden">
+              <div className="flex gap-2">
+                <FaLocationDot size={30} className="inline " />
+                <div>
+                  <h1 className="text-3xl font-[600]">{weather.name}</h1>
+                  <p className="text-[var(--text-2)]">
+                    {new Date(weather.dt * 1000).toLocaleDateString()}{" "}
+                    {formatTimeWithTimezone(weather.dt, weather.timezone)}
+                  </p>
+                </div>
+              </div>
+              <div className="flex border-2 border-white rounded-lg divide-x-2 divide-white overflow-hidden bg-gray-300">
                 <button
                   onClick={() => setUnit("metric")}
                   className={`py-1 px-2 cursor-pointer ${

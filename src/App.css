@@ -14,7 +14,7 @@ main {
   color: var(--text-1);
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   main {
     padding-left: 2rem;
   }
@@ -32,6 +32,7 @@ main {
 .card {
   background: var(--gradient-1);
   backdrop-filter: blur(10px);
+  border: 2px solid #79797978;
   @apply rounded-xl;
 }
 

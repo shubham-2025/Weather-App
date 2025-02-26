@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 @import "tailwindcss";
 
@@ -11,9 +11,14 @@
 
 body {
   /* font-family: "Roboto Mono", serif; */
+  font-family: "Inter", serif;
   transition: background-image 0.5s ease-in-out;
   min-height: 100dvh;
   background-color: var(--bg-color);
+}
+
+.bg {
+  transition: background-image 0.5s ease-in-out;
 }
 
 ::-webkit-scrollbar {
@@ -33,13 +38,13 @@ body {
 .weather-sunny {
   --gradient-1: radial-gradient(
     at top left,
-    rgba(251, 178, 119, 0.71),
-    rgba(102, 80, 112, 0.4),
-    rgba(255, 255, 255, 0.4),
+    rgba(22, 77, 153, 0.71),
+    rgba(47, 147, 218, 0.4),
+    rgba(81, 185, 216, 0.449),
     transparent
   );
   --text-1: #ffffff;
-  --text-2: #374151;
+  --text-2: #1c2026;
 }
 .weather-night {
   --gradient-1: radial-gradient(
@@ -50,7 +55,7 @@ body {
     transparent
   );
   --text-1: #ffffff;
-  --text-2: #97e0ef;
+  --text-2: #c587f4;
 }
 .weather-rainy {
   --gradient-1: radial-gradient(
@@ -79,7 +84,7 @@ body {
     at top left,
     rgba(66, 142, 255, 0.245),
     rgba(125, 169, 244, 0.523),
-    rgba(46, 68, 99, 0.551),
+    rgba(69, 106, 158, 0.551),
     transparent
   );
   --text-1: #ffffff;
