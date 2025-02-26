@@ -5,39 +5,7 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-  Scatter,
 } from "recharts";
-
-import { ScatterProps } from "recharts";
-
-interface WeatherIconProps extends ScatterProps {
-  cx?: number;
-  cy?: number;
-  payload?: {
-    icon: string;
-    description: string;
-  };
-}
-
-const WeatherIcon: React.FC<WeatherIconProps> = ({
-  cx = 0,
-  cy = 0,
-  payload,
-}) => {
-  if (!payload) return null; // Safety check
-
-  return (
-    <foreignObject x={cx - 12} y={cy - 40} width="24" height="24">
-      <img
-        src={payload.icon}
-        alt={payload.description}
-        width="24"
-        height="24"
-        style={{ pointerEvents: "none" }} // Prevents interaction issues
-      />
-    </foreignObject>
-  );
-};
 
 interface CustomTooltipProps {
   active: boolean;
@@ -48,7 +16,7 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
-      <div className="card p-2 shadow-md rounded-md text-center">
+      <div className="tp-card p-2 shadow-md rounded-md text-center">
         <img
           src={data.icon}
           alt={data.description}
@@ -81,6 +49,20 @@ function ForecastCard({ forecast }: { forecast: ForecastData }) {
       description: item.weather[0].description,
     }));
 
+  const CustomLabel = (props: any) => {
+    const { x, y, index } = props;
+    const icon = filteredData[index].icon;
+    return (
+      <image
+        x={x - 16} // Adjust the position to center the icon above the point
+        y={y - 34} // Adjust the position to place the icon above the point
+        href={icon}
+        width={30}
+        height={30}
+      />
+    );
+  };
+
   return (
     <div className="card p-4 text-white flex-1 divide-y-2 divide-gray-300 space-y-2">
       <h2 className="text-2xl font-bold">Forecast</h2>
@@ -95,11 +77,7 @@ function ForecastCard({ forecast }: { forecast: ForecastData }) {
               dataKey="temp"
               stroke="#7b4dfa"
               strokeWidth={2}
-            />
-            <Scatter
-              data={filteredData}
-              dataKey="temp"
-              shape={<WeatherIcon />}
+              label={<CustomLabel />}
             />
           </LineChart>
         </ResponsiveContainer>

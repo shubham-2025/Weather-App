@@ -26,7 +26,7 @@ function Sidebar() {
         </button>
       </div>
       <div
-        className={`sidebar rounded-r-md fixed max-md:right-0 inset-y-0 z-50 bg-white p-4 min-w-[18rem] transition-all duration-300 ${
+        className={`sidebar rounded-r-md fixed max-md:right-0 inset-y-0 z-50 bg-white p-4 w-[18rem] transition-all duration-300 ${
           open ? "max-md:translate-x-0 " : "max-md:translate-x-full "
         }`}
       >
@@ -35,36 +35,39 @@ function Sidebar() {
             <FaX />
           </button>
         </div>
-        <div className="space-y-8 divide-y-2 divide-gray-500">
+        <div className="space-y-2">
           <div className="py-4">
             <Searchbar />
           </div>
-          <div className="space-y-4">
-            {previousSearches.length > 0 ? (
-              previousSearches.map((search) => (
-                <Link
-                  to={`city/${search.term}`}
-                  key={search.term}
-                  className="s block relative w-full p-2 rounded-md shadow-md hover:shadow-lg hover:scale-110 transition-transform duration-300"
-                >
-                  <p className="text-xl font-[600]">{search.term}</p>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      dispatch(removeSearchFromLocalStorage(search));
-                    }}
-                    className=" absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 hover:text-red-500 cursor-pointer"
+          <div className="space-y-8 divide-y-2 divide-gray-500">
+            <h3 className="pb-2">Recent Searches: </h3>
+            <div className="space-y-4 max-h-[100vh]">
+              {previousSearches.length > 0 ? (
+                previousSearches.map((search) => (
+                  <Link
+                    to={`city/${search.term}`}
+                    key={search.term}
+                    className="s block relative w-full p-2 rounded-md shadow-md hover:shadow-lg hover:scale-110 transition-transform duration-300"
                   >
-                    <FaCircleXmark className="" size={16} />
-                  </button>
-                </Link>
-              ))
-            ) : (
-              <div className="h-full flex items-center justify-center">
-                <p className="text-center">No previous searches</p>
-              </div>
-            )}
+                    <p className="text-xl font-[600]">{search.term}</p>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        dispatch(removeSearchFromLocalStorage(search));
+                      }}
+                      className=" absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 hover:text-red-500 cursor-pointer"
+                    >
+                      <FaCircleXmark className="" size={16} />
+                    </button>
+                  </Link>
+                ))
+              ) : (
+                <div className="h-full flex items-center justify-center">
+                  <p className="text-center">No previous searches</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

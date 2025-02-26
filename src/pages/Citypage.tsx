@@ -15,13 +15,6 @@ function Citypage() {
     }
   }, [city]);
 
-  useEffect(() => {
-    console.log(weather);
-  }, [weather]);
-  useEffect(() => {
-    console.log(forecast);
-  }, [forecast]);
-
   return (
     <main className="">
       <div className="space-y-4">
