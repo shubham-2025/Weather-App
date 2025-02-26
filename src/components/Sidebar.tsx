@@ -35,13 +35,13 @@ function Sidebar() {
             <FaX />
           </button>
         </div>
-        <div className="space-y-2">
+        <div className="space-y-2 flex flex-col h-full">
           <div className="py-4">
             <Searchbar />
           </div>
-          <div className="space-y-8 divide-y-2 divide-gray-500">
+          <div className="space-y-4 divide-y-2 divide-gray-500 flex-1 overflow-y-scroll max-h-full overflow-x-hidden">
             <h3 className="pb-2">Recent Searches: </h3>
-            <div className="space-y-4 max-h-[100vh]">
+            <div className="space-y-4  p-4">
               {previousSearches.length > 0 ? (
                 previousSearches.map((search) => (
                   <Link

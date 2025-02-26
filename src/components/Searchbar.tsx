@@ -46,6 +46,9 @@ function Searchbar() {
       const autocompleteService =
         new window.google.maps.places.AutocompleteService();
 
+        // @ts-ignore
+      let debounceTimer: NodeJS.Timeout;
+
       const fetchPredictions = () => {
         if (search.length > 2) {
           autocompleteService.getPlacePredictions(
@@ -69,7 +72,16 @@ function Searchbar() {
         }
       };
 
-      fetchPredictions();
+      const debouncedFetchPredictions = () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          fetchPredictions();
+        }, 300); // Adjust the delay as needed (e.g., 300ms)
+      };
+
+      debouncedFetchPredictions();
+
+      return () => clearTimeout(debounceTimer);
     }
   }, [search, isLoaded]);
 
