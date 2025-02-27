@@ -21,7 +21,7 @@ function Citypage() {
     loading,
     loadingForecast,
   } = useWeather();
-  
+
   useEffect(() => {
     if (city) {
       fetchWeather(city);
@@ -100,7 +100,7 @@ function Citypage() {
   if (loading && loadingForecast) {
     return (
       <main className="flex justify-center items-center min-h-screen text-white">
-        Loading...
+        <div className="loader"></div>
       </main>
     );
   }

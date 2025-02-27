@@ -99,7 +99,7 @@ function Homepage() {
   if (loading && loadingForecast) {
     return (
       <main className="flex justify-center items-center min-h-screen text-white">
-        Loading...
+        <div className="loader"></div>
       </main>
     );
   }
@@ -113,7 +113,7 @@ function Homepage() {
             <div className="flex items-center justify-between">
               <div className="flex gap-2">
                 <FaLocationDot size={30} className="inline " />
-                <div>
+                <div className="backdrop-blur-md">
                   <h1 className="text-3xl font-[600]">{weather.name}</h1>
                   <p className="text-[var(--text-2)] font-[700]">
                     {new Date(weather.dt * 1000).toLocaleDateString()}{" "}
