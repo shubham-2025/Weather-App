@@ -26,6 +26,7 @@ export const weatherBackgrounds = {
   mist: "url('/haze.webp')",
   haze: "url('/haze.webp')",
   smoke: "url('/haze.webp')",
+  fog: "url('/haze.webp')",
   default: "url('/clear-sky.webp')", // Default background
 };
 
@@ -41,6 +42,7 @@ export const weatherIcons = {
   mist: WiFog,
   haze: WiFog,
   smoke: WiFog,
+  fog: WiFog,
   default: WiDaySunny,
 };
 

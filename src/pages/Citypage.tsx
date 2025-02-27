@@ -32,7 +32,7 @@ function Citypage() {
         weatherCondition.includes("clear sky") &&
         now.getTime() > sunsetTime.getTime()
       ) {
-        background = "url('/night-sky.webp')";
+        background = "url('/night.webp')";
       } else {
         background =
           weatherBackgrounds[
@@ -74,6 +74,7 @@ function Citypage() {
       } else if (
         weatherCondition.includes("mist") ||
         weatherCondition.includes("smoke") ||
+        weatherCondition.includes("fog") ||
         weatherCondition.includes("haze")
       ) {
         document.body.classList.add("weather-misty");
@@ -87,7 +88,7 @@ function Citypage() {
 
   return (
     <main className="">
-      <div id="bg" className="bg fixed inset-0 bg-black z-[-1]"></div>
+      <div id="bg" className="bg fixed bg-black inset-0 z-[-1]"></div>
       <div className="space-y-4">
         {weather ? (
           <>
@@ -96,7 +97,7 @@ function Citypage() {
                 <FaLocationDot size={30} className="inline " />
                 <div>
                   <h1 className="text-3xl font-[600]">{weather.name}</h1>
-                  <p className="text-[var(--text-2)]">
+                  <p className="text-[var(--text-2)] font-[700]">
                     {new Date(weather.dt * 1000).toLocaleDateString()}{" "}
                     {formatTimeWithTimezone(weather.dt, weather.timezone)}
                   </p>

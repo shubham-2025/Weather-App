@@ -1,9 +1,10 @@
 import { FiSunrise, FiSunset } from "react-icons/fi";
 import { formatTimeWithTimezone, weatherIcons } from "../utils/weather";
 import { CiTempHigh } from "react-icons/ci";
-import { WiDaySunny, WiHumidity, WiMoonAltFirstQuarter } from "react-icons/wi";
+import { WiDaySunny, WiHumidity } from "react-icons/wi";
 import { MdVisibility } from "react-icons/md";
 import { FaGauge, FaWind, FaCloud, FaArrowDown } from "react-icons/fa6";
+import { LuMoonStar } from "react-icons/lu";
 
 function WeatherCard({
   weather,
@@ -19,7 +20,7 @@ function WeatherCard({
   const now = new Date(weather.dt * 1000);
   const sunsetTime = new Date(weather.sys.sunset * 1000);
   if (weatherCondition == "clear sky" && now.getTime() > sunsetTime.getTime()) {
-    WeatherIcon = WiMoonAltFirstQuarter;
+    WeatherIcon = LuMoonStar;
   } else {
     WeatherIcon =
       weatherIcons[weatherCondition as keyof typeof weatherIcons] ||

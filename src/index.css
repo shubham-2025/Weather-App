@@ -38,9 +38,9 @@ body {
 .weather-sunny {
   --gradient-1: radial-gradient(
     at top left,
-    rgba(22, 77, 153, 0.71),
-    rgba(47, 147, 218, 0.4),
-    rgba(81, 185, 216, 0.449),
+    rgba(7, 42, 92, 0.71),
+    rgba(9, 42, 141, 0.4),
+    rgba(22, 87, 177, 0.597),
     transparent
   );
   --text-1: #ffffff;
@@ -55,7 +55,7 @@ body {
     transparent
   );
   --text-1: #ffffff;
-  --text-2: #c587f4;
+  --text-2: #de7bfc;
 }
 .weather-rainy {
   --gradient-1: radial-gradient(
