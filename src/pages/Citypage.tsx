@@ -9,8 +9,19 @@ import { FaLocationDot } from "react-icons/fa6";
 function Citypage() {
   const { city } = useParams();
 
-  const { unit, setUnit, fetchWeather, weather, forecast, fetchForecast } =
-    useWeather();
+  const {
+    unit,
+    setUnit,
+    fetchWeather,
+    weather,
+    forecast,
+    fetchForecast,
+    error,
+    errorForecast,
+    loading,
+    loadingForecast,
+  } = useWeather();
+  
   useEffect(() => {
     if (city) {
       fetchWeather(city);
@@ -86,11 +97,19 @@ function Citypage() {
     }
   }, [weather]);
 
+  if (loading && loadingForecast) {
+    return (
+      <main className="flex justify-center items-center min-h-screen text-white">
+        Loading...
+      </main>
+    );
+  }
+
   return (
     <main className="">
       <div id="bg" className="bg fixed bg-black inset-0 z-[-1]"></div>
       <div className="space-y-4">
-        {weather ? (
+        {weather && (
           <>
             <div className="flex items-center justify-between">
               <div className="flex gap-2">
@@ -103,7 +122,7 @@ function Citypage() {
                   </p>
                 </div>
               </div>
-              <div className="flex border-2 border-white rounded-lg divide-x-2 divide-white overflow-hidden bg-gray-300 text-black">
+              <div className="flex border-2 border-white rounded-lg divide-x-2 divide-white overflow-hidden bg-gray-300">
                 <button
                   onClick={() => setUnit("metric")}
                   className={`py-1 px-2 cursor-pointer ${
@@ -124,13 +143,11 @@ function Citypage() {
             </div>
             <WeatherCard weather={weather} unit={unit} />
           </>
-        ) : (
-          <p>Loading...</p>
         )}
-        {forecast ? (
-          <ForecastCard forecast={forecast} unit={unit} />
-        ) : (
-          <p>Loading...</p>
+        {forecast && <ForecastCard forecast={forecast} unit={unit} />}
+        {error && <div className="flex-1 card p-4 mb-2">{error}</div>}
+        {errorForecast && (
+          <div className="flex-1 card p-4 mt-2">{errorForecast}</div>
         )}
       </div>
     </main>

@@ -8,8 +8,18 @@ import { FaLocationDot } from "react-icons/fa6";
 
 function Homepage() {
   const { address } = useGeolocation();
-  const { unit, setUnit, fetchWeather, weather, forecast, fetchForecast } =
-    useWeather();
+  const {
+    unit,
+    setUnit,
+    fetchWeather,
+    weather,
+    forecast,
+    fetchForecast,
+    loading,
+    loadingForecast,
+    error,
+    errorForecast,
+  } = useWeather();
 
   useEffect(() => {
     if (address) {
@@ -86,11 +96,19 @@ function Homepage() {
     }
   }, [weather]);
 
+  if (loading && loadingForecast) {
+    return (
+      <main className="flex justify-center items-center min-h-screen text-white">
+        Loading...
+      </main>
+    );
+  }
+
   return (
     <main className="">
-      <div id="bg" className="bg fixed bg-black inset-0 z-[-1]"></div>
+      <div id="bg" className="bg fixed inset-0 z-[-1]"></div>
       <div className="space-y-4 flex flex-col min-h-[91dvh]">
-        {weather ? (
+        {weather && (
           <>
             <div className="flex items-center justify-between">
               <div className="flex gap-2">
@@ -124,13 +142,11 @@ function Homepage() {
             </div>
             <WeatherCard weather={weather} unit={unit} />
           </>
-        ) : (
-          <p>Loading...</p>
         )}
-        {forecast ? (
-          <ForecastCard forecast={forecast} unit={unit} />
-        ) : (
-          <p>Loading...</p>
+        {forecast && <ForecastCard forecast={forecast} unit={unit} />}
+        {error && <div className="flex-1 card p-4 mb-2">{error}</div>}
+        {errorForecast && (
+          <div className="flex-1 card p-4 mt-2">{errorForecast}</div>
         )}
       </div>
     </main>

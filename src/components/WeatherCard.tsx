@@ -3,7 +3,7 @@ import { formatTimeWithTimezone, weatherIcons } from "../utils/weather";
 import { CiTempHigh } from "react-icons/ci";
 import { WiDaySunny, WiHumidity } from "react-icons/wi";
 import { MdVisibility } from "react-icons/md";
-import { FaGauge, FaWind, FaCloud, FaArrowDown } from "react-icons/fa6";
+import { FaGauge, FaWind, FaCloud, FaArrowUp } from "react-icons/fa6";
 import { LuMoonStar } from "react-icons/lu";
 
 function WeatherCard({
@@ -116,7 +116,7 @@ function WeatherCard({
               transform: `rotate(${weather.wind.deg}deg)`,
             }}
           >
-            <FaArrowDown className="" size={40} />
+            <FaArrowUp className="" size={40} />
           </div>
           <p className="font-[700]">{weather.wind.deg}°</p>
         </div>
