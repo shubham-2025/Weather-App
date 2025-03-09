@@ -11,7 +11,6 @@ function Citypage() {
 
   const {
     unit,
-    setUnit,
     fetchWeather,
     weather,
     forecast,
@@ -49,7 +48,6 @@ function Citypage() {
           weatherBackgrounds[
             weatherCondition as keyof typeof weatherBackgrounds
           ] || "url('/clear-sky.webp')";
-        // const background = "url('/snow.webp')";
       }
 
       console.log(background);
@@ -106,14 +104,14 @@ function Citypage() {
   }
 
   return (
-    <main className="">
+    <main>
       <div id="bg" className="bg fixed bg-black inset-0 z-[-1]"></div>
       <div className="space-y-4">
         {weather && (
           <>
             <div className="flex items-center justify-between">
               <div className="flex gap-2">
-                <FaLocationDot size={30} className="inline " />
+                <FaLocationDot size={30} className="inline" />
                 <div>
                   <h1 className="text-3xl font-[600]">{weather.name}</h1>
                   <p className="text-[var(--text-2)] font-[700]">
@@ -122,15 +120,11 @@ function Citypage() {
                   </p>
                 </div>
               </div>
-              <div className="flex border-2 border-white rounded-lg divide-x-2 divide-white overflow-hidden bg-gray-300">
-                
-                
-              </div>
             </div>
-            <WeatherCard weather={weather}  />
+            <WeatherCard weather={weather} />
           </>
         )}
-        {forecast && <ForecastCard forecast={forecast}  />}
+        {forecast && <ForecastCard forecast={forecast} />}
         {error && <div className="flex-1 card p-4 mb-2">{error}</div>}
         {errorForecast && (
           <div className="flex-1 card p-4 mt-2">{errorForecast}</div>
