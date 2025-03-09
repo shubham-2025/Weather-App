@@ -1,56 +1,16 @@
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import React from "react";
 
-interface CustomTooltipProps {
-  active: boolean;
-  payload: any[];
-  unit: "metric" | "imperial";
+interface ForecastCardProps {
+  forecast: ForecastData;
 }
 
-const CustomTooltip: React.FC<CustomTooltipProps> = ({
-  active,
-  payload,
-  unit,
-}) => {
-  if (active && payload && payload.length) {
-    const data = payload[0].payload;
-    return (
-      <div className="tp-card p-2 shadow-md rounded-md text-center">
-        <img
-          src={data.icon}
-          alt={data.description}
-          className="mx-auto w-10 h-5 object-cover"
-        />
-        <p className="text-black">
-          {data.temp}
-          {unit === "metric" ? "°C" : "°F"}
-        </p>
-        <p className="text-sm text-[var(--text-1)]">{data.description}</p>
-      </div>
-    );
-  }
-  return null;
-};
-
-function ForecastCard({
-  forecast,
-  unit,
-}: {
-  forecast: ForecastData;
-  unit: "metric" | "imperial";
-}) {
-  const filteredData = forecast.list
+const ForecastCard: React.FC<ForecastCardProps> = ({ forecast }) => {
+  // Hourly Forecast (Next 24 Hours)
+  const hourlyForecast = forecast.list
     .filter((item) => {
       const forecastTime = new Date(item.dt_txt).getTime();
       const now = Date.now();
-      const diff = forecastTime - now;
-      const hours = diff / (1000 * 60 * 60);
+      const hours = (forecastTime - now) / (1000 * 60 * 60);
       return hours >= 0 && hours <= 24;
     })
     .map((item) => ({
@@ -58,58 +18,68 @@ function ForecastCard({
         hour: "2-digit",
         minute: "2-digit",
       }),
-      temp: item.main.temp,
+      temp: Math.round(item.main.temp),
       icon: `https://openweathermap.org/img/wn/${item.weather[0].icon}.png`,
       description: item.weather[0].description,
     }));
 
-  const CustomLabel = (props: any) => {
-    const { x, y, index } = props;
-    const icon = filteredData[index].icon;
-    return (
-      <image
-        x={x - 16} // Adjust the position to center the icon above the point
-        y={y - 34} // Adjust the position to place the icon above the point
-        href={icon}
-        width={30}
-        height={30}
-      />
-    );
-  };
+  // 7-Day Forecast
+  const dailyForecastMap = new Map();
+  forecast.list.forEach((item) => {
+    const date = new Date(item.dt_txt).toLocaleDateString("en-US", {
+      weekday: "short",
+    });
+    if (!dailyForecastMap.has(date)) {
+      dailyForecastMap.set(date, {
+        day: date,
+        temp: Math.round(item.main.temp),
+        icon: `https://openweathermap.org/img/wn/${item.weather[0].icon}.png`,
+        description: item.weather[0].description,
+      });
+    }
+  });
 
-  const rootStyles = getComputedStyle(document.documentElement);
-  const xAxisLabelColor = rootStyles.getPropertyValue("--text-1").trim();
-  const yAxisLabelColor = rootStyles.getPropertyValue("--text-1").trim();
+  const dailyForecast = Array.from(dailyForecastMap.values()).slice(0, 7);
 
   return (
-    <div className="card p-4 text-white flex-1 divide-y-2 divide-gray-300 space-y-2">
-      <h2 className="text-2xl font-bold">Forecast</h2>
-      <div className="overflow-x-auto">
-        <ResponsiveContainer width="100%" minHeight={400} minWidth={500}>
-          <LineChart data={filteredData}>
-            <XAxis dataKey="time" tick={{ fill: xAxisLabelColor }} />
-            <YAxis
-              domain={["auto", "auto"]}
-              unit={unit === "metric" ? "°C" : "°F"}
-              tick={{ fill: yAxisLabelColor }}
-            />
-            <Tooltip
-              content={
-                <CustomTooltip active={false} payload={[]} unit={unit} />
-              }
-            />
-            <Line
-              type="monotone"
-              dataKey="temp"
-              stroke="#7b4dfa"
-              strokeWidth={2}
-              label={<CustomLabel />}
-            />
-          </LineChart>
-        </ResponsiveContainer>
+    <div className="flex flex-col space-y-4">
+      {/* Hourly Forecast Card with Glassmorphism */}
+      <div className="bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg p-4 rounded-xl">
+        <h2 className="text-lg font-semibold text-white">Hourly Forecast</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 py-2">
+          {hourlyForecast.map((hour, index) => (
+            <div
+              key={index}
+              className="card bg-white/20 backdrop-blur-lg border border-white/10 shadow-md p-4 rounded-lg text-center flex flex-col items-center"
+            >
+              <p className="text-sm font-bold text-white">{hour.time}</p>
+              <img src={hour.icon} alt={hour.description} className="w-12 h-12" />
+              <p className="text-md font-bold text-white">{hour.temp}°C</p>
+              <p className="text-xs text-gray-300">{hour.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 7-Day Forecast Card with Glassmorphism */}
+      <div className=" bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg p-4 rounded-xl">
+        <h2 className="text-lg font-semibold text-white">Next 7 Days Forecast</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 py-2">
+          {dailyForecast.map((day, index) => (
+            <div
+              key={index}
+              className="card bg-white/20 backdrop-blur-lg border border-white/10 shadow-md p-4 rounded-lg text-center flex flex-col items-center"
+            >
+              <p className="text-md font-bold text-white">{day.day}</p>
+              <img src={day.icon} alt={day.description} className="w-14 h-14" />
+              <p className="text-lg font-bold text-white">{day.temp}°C</p>
+              <p className="text-sm text-gray-300">{day.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default ForecastCard;

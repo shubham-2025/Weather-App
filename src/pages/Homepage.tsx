@@ -9,8 +9,6 @@ import { FaLocationDot } from "react-icons/fa6";
 function Homepage() {
   const { address } = useGeolocation();
   const {
-    unit,
-    setUnit,
     fetchWeather,
     weather,
     forecast,
@@ -26,14 +24,11 @@ function Homepage() {
       fetchWeather(address);
       fetchForecast(address);
     }
-  }, [address, unit]);
+  }, [address]);
 
   useEffect(() => {
     if (weather) {
       const weatherCondition = weather.weather[0].description.toLowerCase();
-      console.log(weatherCondition);
-      console.log(weather.dt);
-
       const now = new Date(weather.dt * 1000);
       const sunsetTime = new Date(weather.sys.sunset * 1000);
 
@@ -48,13 +43,9 @@ function Homepage() {
           weatherBackgrounds[
             weatherCondition as keyof typeof weatherBackgrounds
           ] || "url('/clear-sky.webp')";
-        // const background = "url('/snow.webp')";
       }
 
-      console.log(background);
-
       const bg = document.getElementById("bg");
-
       if (bg) {
         bg.style.backgroundImage = background;
         bg.style.backgroundSize = "cover";
@@ -70,10 +61,7 @@ function Homepage() {
         "weather-snowy"
       );
 
-      if (
-        weatherCondition.includes("clear") ||
-        weatherCondition.includes("sun")
-      ) {
+      if (weatherCondition.includes("clear") || weatherCondition.includes("sun")) {
         if (now.getTime() > sunsetTime.getTime()) {
           document.body.classList.add("weather-night");
         } else document.body.classList.add("weather-sunny");
@@ -105,49 +93,27 @@ function Homepage() {
   }
 
   return (
-    <main className="">
+    <main>
       <div id="bg" className="bg fixed inset-0 z-[-1]"></div>
       <div className="space-y-4 flex flex-col min-h-[91dvh]">
         {weather && (
           <>
-            <div className="flex items-center justify-between">
-              <div className="flex gap-2">
-                <FaLocationDot size={30} className="inline " />
-                <div className="backdrop-blur-md">
-                  <h1 className="text-3xl font-[600]">{weather.name}</h1>
-                  <p className="text-[var(--text-2)] font-[700]">
-                    {new Date(weather.dt * 1000).toLocaleDateString()}{" "}
-                    {formatTimeWithTimezone(weather.dt, weather.timezone)}
-                  </p>
-                </div>
-              </div>
-              <div className="flex border-2 border-white rounded-lg divide-x-2 divide-white overflow-hidden bg-gray-300">
-                <button
-                  onClick={() => setUnit("metric")}
-                  className={`py-1 px-2 cursor-pointer ${
-                    unit === "metric" && "bg-white text-black font-[700]"
-                  }`}
-                >
-                  Metric
-                </button>
-                <button
-                  onClick={() => setUnit("imperial")}
-                  className={`py-1 px-2 cursor-pointer ${
-                    unit === "imperial" && "bg-white text-black font-[700]"
-                  }`}
-                >
-                  Imperial
-                </button>
+            <div className="flex items-center gap-2">
+              <FaLocationDot size={30} className="inline" />
+              <div className="backdrop-blur-md">
+                <h1 className="text-3xl font-[600]">{weather.name}</h1>
+                <p className="text-[var(--text-2)] font-[700]">
+                  {new Date(weather.dt * 1000).toLocaleDateString()}{" "}
+                  {formatTimeWithTimezone(weather.dt, weather.timezone)}
+                </p>
               </div>
             </div>
-            <WeatherCard weather={weather} unit={unit} />
+            <WeatherCard weather={weather} />
           </>
         )}
-        {forecast && <ForecastCard forecast={forecast} unit={unit} />}
+        {forecast && <ForecastCard forecast={forecast} />}
         {error && <div className="flex-1 card p-4 mb-2">{error}</div>}
-        {errorForecast && (
-          <div className="flex-1 card p-4 mt-2">{errorForecast}</div>
-        )}
+        {errorForecast && <div className="flex-1 card p-4 mt-2">{errorForecast}</div>}
       </div>
     </main>
   );

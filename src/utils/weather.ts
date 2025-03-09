@@ -15,21 +15,22 @@ const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
 const FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast";
 
 export const weatherBackgrounds = {
-  "clear sky": "url('/clear-sky.webp')",
-  "few clouds": "url('/clouds.webp')",
-  "scattered clouds": "url('/clouds.webp')",
-  "broken clouds": "url('/clouds.webp')",
+  "clear sky": "url('/clear-sky.jpg')",
+  "few clouds": "url('/cloudy.jpg')",
+  "overcast clouds": "url('/cloudy.jpg')",
+  "scattered clouds": "url('/cloudy.jpg')",
+  "broken clouds": "url('/cloudy.jpg')",
   "shower rain": "url('/rain.webp')",
-  rain: "url('/rain.webp')",
+   rain: "url('/rain.webp')",
   "moderate rain": "url('/rain.webp')",
   "light rain": "url('/rain.webp')",
   thunderstorm: "url('/thunderstorm.webp')",
   snow: "url('/snow.webp')",
-  mist: "url('/haze.webp')",
-  haze: "url('/haze.webp')",
-  smoke: "url('/haze.webp')",
-  fog: "url('/haze.webp')",
-  default: "url('/clear-sky.webp')", // Default background
+  mist: "url('/haze.jpg')",
+  haze: "url('/haze.jpg')",
+  smoke: "url('/haze.jpg')",
+  fog: "url('/haze.jpg')",
+  default: "url('/sunny.jpg')", // Default background
 };
 
 export const weatherIcons = {

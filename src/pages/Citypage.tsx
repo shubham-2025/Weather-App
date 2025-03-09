@@ -123,28 +123,14 @@ function Citypage() {
                 </div>
               </div>
               <div className="flex border-2 border-white rounded-lg divide-x-2 divide-white overflow-hidden bg-gray-300">
-                <button
-                  onClick={() => setUnit("metric")}
-                  className={`py-1 px-2 cursor-pointer ${
-                    unit === "metric" && "bg-white text-black font-[700]"
-                  }`}
-                >
-                  Metric
-                </button>
-                <button
-                  onClick={() => setUnit("imperial")}
-                  className={`py-1 px-2 cursor-pointer ${
-                    unit === "imperial" && "bg-white text-black font-[700]"
-                  }`}
-                >
-                  Imperial
-                </button>
+                
+                
               </div>
             </div>
-            <WeatherCard weather={weather} unit={unit} />
+            <WeatherCard weather={weather}  />
           </>
         )}
-        {forecast && <ForecastCard forecast={forecast} unit={unit} />}
+        {forecast && <ForecastCard forecast={forecast}  />}
         {error && <div className="flex-1 card p-4 mb-2">{error}</div>}
         {errorForecast && (
           <div className="flex-1 card p-4 mt-2">{errorForecast}</div>

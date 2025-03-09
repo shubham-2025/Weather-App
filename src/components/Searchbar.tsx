@@ -89,18 +89,18 @@ function Searchbar() {
     setSearch(e.target.value);
   };
 
-  // const handleSelectPrediction = (
-  //   prediction: google.maps.places.AutocompletePrediction
-  // ) => {
-  //   // Extract the city name from the prediction description
-  //   const cityName = prediction.description.split(",")[0].trim();
-  //   console.log(cityName);
-  //   setSearch(cityName); // Update the search state with the city name
-  //   setPredictions([]); // Clear predictions
-  //   setShowSuggestions(false); // Hide the dropdown
-  // };
+  //const handleSelectPrediction = (
+   //prediction: google.maps.places.AutocompletePrediction
+   //) => {
+     // Extract the city name from the prediction description
+     //const cityName = prediction.description.split(",")[0].trim();
+     //console.log(cityName);
+     //setSearch(cityName); // Update the search state with the city name
+     //setPredictions([]); // Clear predictions
+     //setShowSuggestions(false); // Hide the dropdown
+   //};
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (search.trim() === "") return;
